@@ -1,0 +1,140 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>PLANNING</h2>
+
+<form action="" class="form-inline margin-set" method="post" id="idFrmPlan">
+    <label for="idp_senin" class="name-clr">Senin</label><br />
+    <input type="text" name="p_senin" class="form-control clArray" id="idp_senin" placeholder="" /><br />
+
+    <label for="idp_selasa" class="name-clr">Selasa</label><br />
+    <input type="text" name="p_selasa" class="form-control clArray" id="idp_selasa" placeholder="" /><br />
+
+    <label for="idp_rabu" class="name-clr">Rabu</label><br />
+    <input type="text" name="p_rabu" class="form-control clArray" id="idp_rabu" placeholder="" /><br />
+
+    <label for="idp_kamis" class="name-clr">Kamis</label><br />
+    <input type="text" name="p_kamis" class="form-control clArray" id="idp_kamis" placeholder="" /><br />
+
+    <label for="idp_jumat" class="name-clr">Jumat</label><br />
+    <input type="text" name="p_jumat" class="form-control clArray" id="idp_jumat" placeholder="" /><br />
+
+    <label for="idp_sabtu" class="name-clr">Sabtu</label><br />
+    <input type="text" name="p_sabtu" class="form-control clArray" id="idp_sabtu" placeholder="" /><br />
+
+    <label for="idp_minggu" class="name-clr">Minggu</label><br />
+    <input type="text" name="p_minggu" class="form-control clArray" id="idp_minggu" placeholder="" /><br />
+
+
+
+    <label for="ide_senin" class="name-clr">Senin</label><br />
+    <input type="text" name="e_senin" class="form-control clArrayFix" id="ide_senin" placeholder="" /><br />
+
+    <label for="ide_selasa" class="name-clr">Selasa</label><br />
+    <input type="text" name="e_selasa" class="form-control clArrayFix" id="ide_selasa" placeholder="" /><br />
+
+    <label for="ide_rabu" class="name-clr">Rabu</label><br />
+    <input type="text" name="e_rabu" class="form-control clArrayFix" id="ide_rabu" placeholder="" /><br />
+
+    <label for="ide_kamis" class="name-clr">Kamis</label><br />
+    <input type="text" name="e_kamis" class="form-control clArrayFix" id="ide_kamis" placeholder="" /><br />
+
+    <label for="ide_jumat" class="name-clr">Jumat</label><br />
+    <input type="text" name="e_jumat" class="form-control clArrayFix" id="ide_jumat" placeholder="" /><br />
+
+    <label for="ide_sabtu" class="name-clr">Sabtu</label><br />
+    <input type="text" name="e_sabtu" class="form-control clArrayFix" id="ide_sabtu" placeholder="" /><br />
+
+    <label for="ide_minggu" class="name-clr">Minggu</label><br />
+    <input type="text" name="e_minggu" class="form-control clArrayFix" id="ide_minggu" placeholder="" /><br />
+
+    <button id="idSubmit">Submit</button>
+</form>
+
+<script>
+    $('#idSubmit').click(function () {
+
+        TestPlan();
+
+        var vForm = $('#idFrmPlan').serialize();
+        debugger;
+        $.ajax({
+            url: '/Home/Save',
+            data: vForm,
+            method: 'Post',
+            success: function (mdl) {
+                debugger;
+                if (mdl.Simpan == "Berhasil") {
+                    debugger;
+                    alert("Data berhasil disimpan");
+                    
+                }
+                else {
+                    debugger;
+                    alert("Data gagal disimpan");
+                }
+            }
+        });
+
+    });
+
+
+    function TestPlan()
+    {   
+        //var n = 0;
+        var b = []; var b_sort = []; var a = [];
+        $('.clArray').each(function (i, d) { //index fungsi
+            debugger;
+            var x = $(this).val();
+            a[i] = x;
+           if (x != 0) {
+               b[i] = x;
+               b_sort[i] = x;
+           }
+        });
+
+        var n = eval(b.join('+'));
+        debugger;
+        var m = Math.floor(n / b.length);
+        debugger;
+        var array = [];
+        for (var i = 0; i < b.length; i++)
+        {
+            array[i] = m;
+        }
+
+        var j = 1;
+        if (n % (b.length * m) != 0) {
+            debugger;
+            for (var i = (b.length * m) + 1; i <= n; i++) {
+                b_sort.sort();
+                var ind = b.indexOf(b_sort[parseInt(b_sort.length) - j]);
+                array[ind] += 1;
+                b[ind] = 100;
+                j += 1;
+            }
+            array;
+            debugger;
+        }
+
+        $('.clArrayFix').each(function (i, d) { //index fungsi
+            debugger;
+            if (a[i] != 0) {
+                $(this).val(array[i]);
+                debugger;
+            }
+            else {
+                $(this).val(0);
+                debugger;
+            }
+        });
+        debugger;
+    }
+
+
+
+
+</script>
+
